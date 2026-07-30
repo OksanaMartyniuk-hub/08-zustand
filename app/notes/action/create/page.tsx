@@ -10,10 +10,10 @@ export const metadata: Metadata = {
     title: "Створити нову нотатку | NoteHub",
     description:
       "Форма створення нотатки в NoteHub з автоматичним збереженням чернетки.",
-    url: "https://notehub.com",
+    url: "https://notehub.com/notes/action/create",
     images: [
       {
-        url: "https://goit.global",
+        url: "https://ac.goit.global/fullstack/react/notehub-og-meta.jpg",
         width: 1200,
         height: 630,
         alt: "Сторінка створення нотатки в NoteHub",

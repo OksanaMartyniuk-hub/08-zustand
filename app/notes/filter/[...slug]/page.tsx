@@ -26,7 +26,7 @@ export async function generateMetadata({
     ? "Переглядайте та керуйте всіма своїми нотатками в органайзері NoteHub."
     : `Усі ваші збережені нотатки, які відфільтровано за категорією або тегом #${currentTag}.`;
 
-  const url = `https://notehub.com{slug ? slug.join("/") : ""}`;
+  const url = `https://notehub.com/notes/filter/${slug ? slug.join("/") : ""}`;
 
   return {
     title,

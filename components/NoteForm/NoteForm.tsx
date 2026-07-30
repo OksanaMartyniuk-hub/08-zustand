@@ -10,10 +10,11 @@ export default function NoteForm() {
   const queryClient = useQueryClient();
   const router = useRouter();
 
+  // Отримуємо стан та екшени із Zustand стору
   const { draft, setDraft, clearDraft } = useNoteStore();
-
   const isHydrated = useNoteStore.persist?.hasHydrated();
 
+  // Mutation для створення нотатки через TanStack Query
   const createMutation = useMutation({
     mutationFn: createNote,
     onSuccess: () => {
@@ -32,14 +33,17 @@ export default function NoteForm() {
     >,
   ) => {
     const { name, value } = e.target;
-    setDraft({ [name]: value });
+    setDraft({ ...draft, [name]: value });
   };
 
-  const handleSubmitAction = () => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
     if (!draft.title || draft.title.length < 3) {
       alert("Назва має містити мінімум 3 символи");
       return;
     }
+
     createMutation.mutate({
       title: draft.title,
       content: draft.content,
@@ -52,7 +56,7 @@ export default function NoteForm() {
   }
 
   return (
-    <form action={handleSubmitAction} className={css.form}>
+    <form onSubmit={handleSubmit} className={css.form}>
       <div className={css.formGroup}>
         <label htmlFor="title">Title</label>
         <input
@@ -60,10 +64,11 @@ export default function NoteForm() {
           type="text"
           name="title"
           className={css.input}
-          defaultValue={draft.title}
+          value={draft.title}
           onChange={handleChange}
           required
           minLength={3}
+          maxLength={50}
         />
       </div>
 
@@ -74,8 +79,9 @@ export default function NoteForm() {
           name="content"
           rows={8}
           className={css.textarea}
-          defaultValue={draft.content}
+          value={draft.content}
           onChange={handleChange}
+          maxLength={500}
         />
       </div>
 
@@ -85,7 +91,7 @@ export default function NoteForm() {
           id="tag"
           name="tag"
           className={css.select}
-          defaultValue={draft.tag}
+          value={draft.tag}
           onChange={handleChange}
           required
         >
@@ -101,7 +107,7 @@ export default function NoteForm() {
         <button
           type="button"
           className={css.cancelButton}
-          onClick={() => router.back()}
+          onClick={() => router.back()} // Повертає на попередній маршрут без очищення чернетки
         >
           Cancel
         </button>

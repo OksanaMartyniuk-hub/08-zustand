@@ -14,7 +14,7 @@ type Props = {
 // 1. Асинхронна функція для генерації динамічного SEO та Open Graph
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
-  const url = `https://notehub.com{id}`;
+  const url = `https://notehub.com/notes/${id}`;
 
   try {
     // Отримуємо дані нотатки через ваш API-клієнт
